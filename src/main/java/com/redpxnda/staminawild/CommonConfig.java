@@ -31,7 +31,7 @@ public class CommonConfig {
         PLAYER_BLOCK_COST = BUILDER.comment("How much stamina blocking with a shield costs. Set to -1 to disable. \n(Check Paraglider mod config for default stamina level)")
                 .define("Shield Cost", 35);
         PLAYER_BLOCK_PENALTY = BUILDER.comment("How long shields are disabled for after losing full stamina(in ticks). Set to -1 to disable.")
-                .define("Shield Penalty", 10);
+                .define("Shield Penalty", 40);
         PLAYER_RECOVERY_TIME = BUILDER.comment("How long it takes for stamina to start regenning(in ticks). Set to -1 to disable.")
                 .define("Recovery Time", 30);
 

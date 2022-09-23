@@ -16,14 +16,17 @@ public class FatigueEffect extends MobEffect {
     public FatigueEffect() {
         super(MobEffectCategory.HARMFUL, 0xeeeeee);
 
-        addAttributeModifier(Attributes.MOVEMENT_SPEED, "1d4f7609-7d47-4bcf-a434-b9f2812f60a4", -0.15D, AttributeModifier.Operation.MULTIPLY_BASE);
-        addAttributeModifier(Attributes.ATTACK_SPEED, "d105c2f7-d3c4-449b-a84f-cd3c2fe57d8e", -0.1D, AttributeModifier.Operation.MULTIPLY_BASE);
+        addAttributeModifier(Attributes.MOVEMENT_SPEED, "1d4f7609-7d47-4bcf-a434-b9f2812f60a4", -1.0, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.ATTACK_SPEED, "d105c2f7-d3c4-449b-a84f-cd3c2fe57d8e", -1.0, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(Attributes.ATTACK_DAMAGE, "d105c2f7-d3c4-449b-a84f-cd3c2fe57d8e", -1.0, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         instance = this;
     }
+    public void applyEffectTick(LivingEntity pEntity, int pAmplifier) {
 
+    }
     @Override
     public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
-        return false;
+        return pDuration > 0;
     }
 }
