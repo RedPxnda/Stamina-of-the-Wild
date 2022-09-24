@@ -1,6 +1,10 @@
 package com.redpxnda.staminawild;
 
 import com.mojang.logging.LogUtils;
+import com.redpxnda.staminawild.client.StaminaHudOverlay;
+import com.redpxnda.staminawild.config.CommonConfig;
+import com.redpxnda.staminawild.packet.Packets;
+import com.redpxnda.staminawild.potion.PotionEffects;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,16 +45,17 @@ public class StaminaWild {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new Events());
+        MinecraftForge.EVENT_BUS.register(new StaminaRegen());
         MinecraftForge.EVENT_BUS.register(new Attributes());
+        MinecraftForge.EVENT_BUS.register(new Events());
         FMLJavaModLoadingContext.get().getModEventBus().addListener(Attributes::AttachAttributes);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,CommonConfig.SPEC, "staminawild-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "staminawild-common.toml");
     }
 
     private void setup(final FMLCommonSetupEvent event) {
         // Some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        event.enqueueWork(Packets::init);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

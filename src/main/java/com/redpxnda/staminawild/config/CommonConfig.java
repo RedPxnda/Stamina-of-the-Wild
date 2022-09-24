@@ -1,4 +1,4 @@
-package com.redpxnda.staminawild;
+package com.redpxnda.staminawild.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
