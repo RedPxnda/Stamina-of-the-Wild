@@ -62,6 +62,7 @@ public class StaminaHudOverlay {
                         i2--;
                     }
                     RenderSystem.setShaderTexture(0, EGG_STAMINA[progress]);
+                    System.out.println(progress);
                     //poseStack.translate(0,0,5);
                     GuiComponent.blit(poseStack, x-ClientConfig.POSITION_X.get()+(i2*23), y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
                 }
