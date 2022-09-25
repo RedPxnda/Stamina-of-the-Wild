@@ -1,11 +1,12 @@
 package com.redpxnda.staminawild.capability;
 
+import com.redpxnda.staminawild.config.CommonConfig;
 import net.minecraft.nbt.CompoundTag;
 
 public class PlayerStamina {
-    private int stamina = 1000;
+    private int stamina = CommonConfig.MAX_STAMINA.get();
     private double recoveryTime = 20;
-    private int MAX_STAMINA = 1000;
+    private int MAX_STAMINA = CommonConfig.MAX_STAMINA.get();
     private final int MIN_STAMINA = 0;
 
     public void setStamina(int stamina) {
@@ -16,7 +17,9 @@ public class PlayerStamina {
         return stamina;
     }
     public void addStamina(int amount) {
-        this.stamina = Math.min(stamina + amount, MAX_STAMINA);
+        if(stamina + amount <= MAX_STAMINA) {
+            this.stamina += amount;
+        }
     }
 
     public void setRecoveryTime(double recoveryTime) {
@@ -30,7 +33,9 @@ public class PlayerStamina {
     }
 
     public void takeStamina(int amount) {
-        this.stamina = Math.max(stamina - amount, MIN_STAMINA);
+        if(stamina - amount >= MIN_STAMINA) {
+            this.stamina -= amount;
+        }
     }
     public int getMaxStamina() {
         return MAX_STAMINA;

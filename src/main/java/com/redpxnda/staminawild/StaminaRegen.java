@@ -22,10 +22,9 @@ public class StaminaRegen {
                 event.player.getCapability(PlayerStaminaProvider.PLAYER_STAMINA).ifPresent(stamina -> {
                     stamina.depleteRecoveryTime();
                     if (stamina.getStamina() < 10) event.player.addEffect(new MobEffectInstance(PotionEffects.FATIGUE.get(), CommonConfig.PLAYER_RECOVERY_TIME.get(), 2, false, false, false));
-                    Vec3 motion = event.player.getDeltaMovement();
 
-                    if (stamina.getRecoveryTime() <= 0 && motion.z == 0 && motion.x == 0) {
-                        stamina.addStamina(1);
+                    if (stamina.getRecoveryTime() <= 0) {
+                        stamina.addStamina(CommonConfig.STAMINA_REGEN.get());
                     }
                     Packets.sendToPlayer(new StaminaSyncToClientPacket(stamina.getStamina()), serverPlayer);
                 });

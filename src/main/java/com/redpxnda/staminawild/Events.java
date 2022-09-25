@@ -49,8 +49,6 @@ public class Events {
                             int finalCost = (int) cCost;
                             h.takeStamina(finalCost);
                             h.setRecoveryTime(CommonConfig.PLAYER_RECOVERY_TIME.get());
-                            if (stamina < 1)
-                                player.addEffect(new MobEffectInstance(PotionEffects.FATIGUE.get(), 60, 2, false, false, false));
                         }
                     });
                 }
@@ -86,8 +84,6 @@ public class Events {
                         h.takeStamina(finalCost);
                         h.setRecoveryTime(CommonConfig.PLAYER_RECOVERY_TIME.get());
                     } else {
-                        if (stamina < 1)
-                            player.addEffect(new MobEffectInstance(PotionEffects.FATIGUE.get(), 60, 2, false, false, false));
                         float damage = event.getAmount();
                         event.setAmount(damage + CommonConfig.PLAYER_HIT_ADDITION.get());
                     }
@@ -114,9 +110,7 @@ public class Events {
                             } else {
                                 armorWeight = 1 + armorWeight / 5;
                             }
-                            if (stamina < 1) {
-                                event.player.addEffect(new MobEffectInstance(PotionEffects.FATIGUE.get(), 60, 2, false, false, false));
-                            } else {
+                            if (stamina > 0) {
                                 int cost = CommonConfig.PLAYER_SPRINT_COST.get();
                                 double dCost = cost;
                                 double cCost = dCost * armorWeight;
@@ -154,9 +148,7 @@ public class Events {
                                 armorWeight = 1 + armorWeight / 5;
                             }
                             int stamina = h.getStamina();
-                            if (stamina < 1) {
-                                player.addEffect(new MobEffectInstance(PotionEffects.FATIGUE.get(), 60, 2, false, false, false));
-                            } else {
+                            if (stamina > 1) {
                                 int cost = CommonConfig.PLAYER_JUMP_COST.get();
                                 double dCost = cost;
                                 double cCost = dCost * armorWeight;
@@ -164,8 +156,6 @@ public class Events {
                                 int finalCost = (int) cCost;
                                 h.takeStamina(finalCost);
                                 h.setRecoveryTime(CommonConfig.PLAYER_RECOVERY_TIME.get());
-                                if (stamina < 1)
-                                    player.addEffect(new MobEffectInstance(PotionEffects.FATIGUE.get(), 60, 2, false, false, false));
                             }
                         });
                     }
@@ -203,7 +193,6 @@ public class Events {
                             //event.setCanceled(true);
                             if (CommonConfig.PLAYER_BLOCK_PENALTY.get() > -1)
                                 player.getCooldowns().addCooldown(shield, CommonConfig.PLAYER_BLOCK_PENALTY.get());
-                            player.addEffect(new MobEffectInstance(PotionEffects.FATIGUE.get(), 60, 2, false, false, false));
                         } else {
                             int cost = CommonConfig.PLAYER_BLOCK_COST.get();
                             double dCost = cost;

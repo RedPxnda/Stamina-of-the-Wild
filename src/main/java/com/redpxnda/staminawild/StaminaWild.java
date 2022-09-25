@@ -2,6 +2,7 @@ package com.redpxnda.staminawild;
 
 import com.mojang.logging.LogUtils;
 import com.redpxnda.staminawild.client.StaminaHudOverlay;
+import com.redpxnda.staminawild.config.ClientConfig;
 import com.redpxnda.staminawild.config.CommonConfig;
 import com.redpxnda.staminawild.packet.Packets;
 import com.redpxnda.staminawild.potion.PotionEffects;
@@ -51,6 +52,7 @@ public class StaminaWild {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(Attributes::AttachAttributes);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "staminawild-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "staminawild-client.toml");
     }
 
     private void setup(final FMLCommonSetupEvent event) {
