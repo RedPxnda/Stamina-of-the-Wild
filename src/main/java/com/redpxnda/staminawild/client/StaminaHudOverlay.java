@@ -50,15 +50,6 @@ public class StaminaHudOverlay {
             int simpleStamina = ClientStaminaData.getPlayerStamina() / (CommonConfig.MAX_STAMINA.get() / (ClientConfig.SEGMENTS.get()*22)) - 1;
             for (int i = 1; i <= ClientConfig.SEGMENTS.get(); i++) {
                 int i2 = i;
-                if (i*22 >= simpleStamina) {
-                    RenderSystem.setShaderTexture(0, EGG_STAMINA[1]);
-                    poseStack.translate(0,0,-5);
-                    GuiComponent.blit(poseStack, x - ClientConfig.POSITION_X.get() + (i * 23)-23, y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
-                }
-                if (i*22 <= simpleStamina) {
-                    RenderSystem.setShaderTexture(0, EGG_STAMINA[22]);
-                    GuiComponent.blit(poseStack, x-ClientConfig.POSITION_X.get()+(i*23)-23, y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
-                }
                 if (((i+1)*22 > simpleStamina && i*22 < simpleStamina) || (i*22 > simpleStamina && i<2)) {
                     int progress = simpleStamina - (i*22);
                     if (simpleStamina < 22) {
@@ -66,8 +57,17 @@ public class StaminaHudOverlay {
                         i2--;
                     }
                     RenderSystem.setShaderTexture(0, EGG_STAMINA[progress]);
-                    poseStack.translate(0,0,5);
+                    //poseStack.translate(0,0,5);
                     GuiComponent.blit(poseStack, x-ClientConfig.POSITION_X.get()+(i2*23), y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
+                }
+                if (i*22 >= simpleStamina) {
+                    RenderSystem.setShaderTexture(0, EGG_STAMINA[1]);
+                    //poseStack.translate(0,0,-5);
+                    GuiComponent.blit(poseStack, x - ClientConfig.POSITION_X.get() + (i * 23)-23, y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
+                }
+                if (i*22 <= simpleStamina) {
+                    RenderSystem.setShaderTexture(0, EGG_STAMINA[22]);
+                    GuiComponent.blit(poseStack, x-ClientConfig.POSITION_X.get()+(i*23)-23, y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
                 }
 
             }
