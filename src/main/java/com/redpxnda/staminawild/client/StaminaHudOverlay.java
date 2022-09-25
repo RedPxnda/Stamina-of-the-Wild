@@ -33,7 +33,6 @@ public class StaminaHudOverlay {
     private static final ResourceLocation EMPTY_BAR_V = new ResourceLocation("staminawild", "textures/stamina/bar/empty_v.png");
     private static final ResourceLocation FULL_BAR_V = new ResourceLocation("staminawild", "textures/stamina/bar/full_v.png");
     private static final ResourceLocation[] EGG_STAMINA = new ResourceLocation[23];
-    private static final PoseStack poseStack = new PoseStack();
     private static final PoseStack RENDER_REVERTED = new PoseStack();
 
     static {
@@ -55,7 +54,6 @@ public class StaminaHudOverlay {
                     RenderSystem.setShaderTexture(0, EGG_STAMINA[1]);
                     poseStack.translate(0,0,-5);
                     GuiComponent.blit(poseStack, x - ClientConfig.POSITION_X.get() + (i * 23)-23, y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
-                    poseStack.translate(0,0,5);
                 }
                 if (i*22 <= simpleStamina) {
                     RenderSystem.setShaderTexture(0, EGG_STAMINA[22]);
@@ -68,6 +66,7 @@ public class StaminaHudOverlay {
                         i2--;
                     }
                     RenderSystem.setShaderTexture(0, EGG_STAMINA[progress]);
+                    poseStack.translate(0,0,5);
                     GuiComponent.blit(poseStack, x-ClientConfig.POSITION_X.get()+(i2*23), y - ClientConfig.POSITION_Y.get(), 0, 0, 22, 9, 22, 9);
                 }
 
@@ -94,7 +93,7 @@ public class StaminaHudOverlay {
             poseStack.translate(0,0,5);
             RenderSystem.setShaderTexture(0, FULL_BAR_V);
             int divideAmount = CommonConfig.MAX_STAMINA.get()/ClientConfig.BAR_LENGTH.get();
-            GuiComponent.blit(RENDER_REVERTED, x - ClientConfig.POSITION_X.get() - ClientStaminaData.getPlayerStamina()/divideAmount, y - ClientConfig.POSITION_Y.get(), 0, ClientStaminaData.getPlayerStamina()/divideAmount, ClientConfig.BAR_WIDTH.get(), ClientStaminaData.getPlayerStamina()/divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get());
+            GuiComponent.blit(RENDER_REVERTED, x - ClientConfig.POSITION_X.get(), y - ClientConfig.POSITION_Y.get(), 0, 0, ClientConfig.BAR_WIDTH.get(), ClientStaminaData.getPlayerStamina()/divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get());
         } else {
             int x = width / 2;
             int y = height;
