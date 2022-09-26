@@ -85,6 +85,33 @@ public class StaminaHudOverlay {
                 y+=ClientConfig.POSITION_Y.get();
                 horizontalBarRendering(gui, poseStack, partialTick, x, y);
             }
+            case "vb", "Vertical Bar"-> {
+                switch (ClientConfig.POSITION_PRESET.get()) {
+                    case "bottom_right" -> {
+                        x = width-5-ClientConfig.BAR_LENGTH.get();
+                        y = height-25;
+                    }
+                    case "bottom_left" -> {
+                        x = 3;
+                        y = height-25;
+                    }
+                    case "top_right" -> {
+                        x = width-5-ClientConfig.BAR_LENGTH.get();
+                        y = 25;
+                    }
+                    case "top_left" -> {
+                        x = 3;
+                        y = 25;
+                    }
+                    default -> {
+                        x = width / 2;
+                        y = height;
+                    }
+                }
+                x+=ClientConfig.POSITION_X.get();
+                y+=ClientConfig.POSITION_Y.get();
+                verticalBarRendering(gui, poseStack, partialTick, x, y);
+            }
             default -> {
                 switch (ClientConfig.POSITION_PRESET.get()) {
                     case "bottom_right" -> {
@@ -153,21 +180,48 @@ public class StaminaHudOverlay {
         // getting the divide amount- I need this so players can customize the actual bar to their heart's content
         int divideAmount = CommonConfig.MAX_STAMINA.get()/ClientConfig.BAR_LENGTH.get();
         // anndd the blit.
-        GuiComponent.blit(poseStack, x, y, 0, 0, ClientStaminaData.getPlayerStamina()/divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get(), ClientConfig.BAR_WIDTH.get());
+        GuiComponent.blit(poseStack,
+                x,
+                y,
+                0,
+                0,
+                ClientStaminaData.getPlayerStamina()/divideAmount,
+                ClientConfig.BAR_WIDTH.get(),
+                ClientConfig.BAR_LENGTH.get(),
+                ClientConfig.BAR_WIDTH.get());
     }
     private static void verticalBarRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
-        //TODO: fix this
-        int x = width / 2;
-        int y = height;
+        int x = width / 2 - ClientConfig.POSITION_X.get()+ClientConfig.BAR_WIDTH.get();
+        int y = height - ClientConfig.POSITION_Y.get()-ClientConfig.BAR_LENGTH.get();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, EMPTY_BAR_V);
         poseStack.translate(0,0,-5);
-        GuiComponent.blit(poseStack, x - ClientConfig.POSITION_X.get(), y - ClientConfig.POSITION_Y.get(), 0, 0, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get(), ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get());
+        GuiComponent.blit(
+                poseStack,
+                x,
+                y,
+                0,
+                0,
+                ClientConfig.BAR_WIDTH.get(),
+                ClientConfig.BAR_LENGTH.get(),
+                ClientConfig.BAR_WIDTH.get(),
+                ClientConfig.BAR_LENGTH.get());
         poseStack.translate(0,0,5);
         RenderSystem.setShaderTexture(0, FULL_BAR_V);
-        int divideAmount = CommonConfig.MAX_STAMINA.get()/ClientConfig.BAR_LENGTH.get();
-        //GuiComponent.blit(RENDER_REVERTED, x - ClientConfig.POSITION_X.get(), y - ClientConfig.POSITION_Y.get(), 0, 0, ClientConfig.BAR_WIDTH.get(), ClientStaminaData.getPlayerStamina()/divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get());
+        int divideAmount = ClientStaminaData.getPlayerStamina()/(CommonConfig.MAX_STAMINA.get()/ClientConfig.BAR_LENGTH.get());
+        GuiComponent.blit(
+                poseStack,
+                x,
+                y+ClientConfig.BAR_LENGTH.get()-divideAmount,
+
+                0,
+                ClientConfig.BAR_LENGTH.get()-divideAmount,
+                ClientConfig.BAR_WIDTH.get(),
+                divideAmount,
+                ClientConfig.BAR_WIDTH.get(),
+                ClientConfig.BAR_LENGTH.get()
+        );
     }
     private static void lightningBoltRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int x, int y, int mode) {
         //Lightning bolt rendering is the default renderer, with vanilla style icons to indicate the player's stamina.
