@@ -1,3 +1,6 @@
 {
-
+  "attribute.staminawild.armor_weight": "Armor Weight",
+  "attribute.staminawild.item_weight": "Item Weight",
+  "attribute.staminawild.shield_stability": "Shield Stability",
+  "effect.staminawild.tired": "Exhausted"
 }

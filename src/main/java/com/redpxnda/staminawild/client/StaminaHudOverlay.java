@@ -61,7 +61,7 @@ public class StaminaHudOverlay {
             case "hb", "Horizontal Bar", "bar" -> {
                 switch (ClientConfig.POSITION_PRESET.get()) {
                     case "bottom_right" -> {
-                        x = width-5-ClientConfig.BAR_LENGTH.get();
+                        x = width-3-ClientConfig.BAR_LENGTH.get();
                         y = height-25;
                     }
                     case "bottom_left" -> {
@@ -69,12 +69,12 @@ public class StaminaHudOverlay {
                         y = height-25;
                     }
                     case "top_right" -> {
-                        x = width-5-ClientConfig.BAR_LENGTH.get();
-                        y = 25;
+                        x = width-3-ClientConfig.BAR_LENGTH.get();
+                        y = 5;
                     }
                     case "top_left" -> {
                         x = 3;
-                        y = 25;
+                        y = 5;
                     }
                     default -> {
                         x = width / 2;
@@ -88,20 +88,20 @@ public class StaminaHudOverlay {
             case "vb", "Vertical Bar"-> {
                 switch (ClientConfig.POSITION_PRESET.get()) {
                     case "bottom_right" -> {
-                        x = width-5-ClientConfig.BAR_LENGTH.get();
-                        y = height-25;
+                        x = (int) Math.round(width*1.8);
+                        y = height-5;
                     }
                     case "bottom_left" -> {
-                        x = 3;
-                        y = height-25;
+                        x = -30;
+                        y = height-5;
                     }
                     case "top_right" -> {
-                        x = width-5-ClientConfig.BAR_LENGTH.get();
-                        y = 25;
+                        x = (int) Math.round(width*1.8);
+                        y = ClientConfig.BAR_LENGTH.get() + 5;
                     }
                     case "top_left" -> {
-                        x = 3;
-                        y = 25;
+                        x = -30;
+                        y = ClientConfig.BAR_LENGTH.get() + 5;
                     }
                     default -> {
                         x = width / 2;
@@ -180,15 +180,7 @@ public class StaminaHudOverlay {
         // getting the divide amount- I need this so players can customize the actual bar to their heart's content
         int divideAmount = CommonConfig.MAX_STAMINA.get()/ClientConfig.BAR_LENGTH.get();
         // anndd the blit.
-        GuiComponent.blit(poseStack,
-                x,
-                y,
-                0,
-                0,
-                ClientStaminaData.getPlayerStamina()/divideAmount,
-                ClientConfig.BAR_WIDTH.get(),
-                ClientConfig.BAR_LENGTH.get(),
-                ClientConfig.BAR_WIDTH.get());
+        GuiComponent.blit(poseStack, x, y, 0, 0, ClientStaminaData.getPlayerStamina()/divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get(), ClientConfig.BAR_WIDTH.get());
     }
     private static void verticalBarRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
         int x = width / 2 - ClientConfig.POSITION_X.get()+ClientConfig.BAR_WIDTH.get();
@@ -197,30 +189,11 @@ public class StaminaHudOverlay {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, EMPTY_BAR_V);
         poseStack.translate(0,0,-5);
-        GuiComponent.blit(
-                poseStack,
-                x,
-                y,
-                0,
-                0,
-                ClientConfig.BAR_WIDTH.get(),
-                ClientConfig.BAR_LENGTH.get(),
-                ClientConfig.BAR_WIDTH.get(),
-                ClientConfig.BAR_LENGTH.get());
+        GuiComponent.blit(poseStack, x, y, 0, 0, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get(), ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get());
         poseStack.translate(0,0,5);
         RenderSystem.setShaderTexture(0, FULL_BAR_V);
         int divideAmount = ClientStaminaData.getPlayerStamina()/(CommonConfig.MAX_STAMINA.get()/ClientConfig.BAR_LENGTH.get());
-        GuiComponent.blit(
-                poseStack,
-                x,
-                y+ClientConfig.BAR_LENGTH.get()-divideAmount,
-
-                0,
-                ClientConfig.BAR_LENGTH.get()-divideAmount,
-                ClientConfig.BAR_WIDTH.get(),
-                divideAmount,
-                ClientConfig.BAR_WIDTH.get(),
-                ClientConfig.BAR_LENGTH.get()
+        GuiComponent.blit(poseStack, x, y+ClientConfig.BAR_LENGTH.get()-divideAmount, 0, ClientConfig.BAR_LENGTH.get()-divideAmount, ClientConfig.BAR_WIDTH.get(), divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get()
         );
     }
     private static void lightningBoltRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int x, int y, int mode) {

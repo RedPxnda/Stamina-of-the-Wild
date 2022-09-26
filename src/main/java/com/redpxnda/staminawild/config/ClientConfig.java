@@ -16,7 +16,7 @@ public class ClientConfig {
     static {
         BUILDER.push("Client Config for Stamina of the Wild");
 
-        RENDER_MODE = BUILDER.comment("Rendering mode for stamina...\nValid Options: 'Default', 'Horizontal Bar', 'Vertical Bar', 'Segments', 'Crosshair'")
+        RENDER_MODE = BUILDER.comment("Rendering mode for stamina...\nValid Options: 'Default', 'Horizontal Bar', 'Vertical Bar', 'Segments'")
                 .define("Render mode", "Default");
         SEGMENTS = BUILDER.comment("Amount of segments for the 'Segments' render mode.")
                 .define("Segments", 5);
