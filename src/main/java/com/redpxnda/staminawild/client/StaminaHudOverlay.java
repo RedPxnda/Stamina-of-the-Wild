@@ -7,8 +7,8 @@ import com.redpxnda.staminawild.config.CommonConfig;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 import java.lang.reflect.Array;
 
@@ -24,7 +24,7 @@ public class StaminaHudOverlay {
 
 
     //main method for rendering
-    public static final IIngameOverlay HUD_STAMINA = ((gui, poseStack, partialTick, width, height) -> {
+    public static final IGuiOverlay HUD_STAMINA = ((gui, poseStack, partialTick, width, height) -> {
         int x;
         int y;
         int mode = 1;
@@ -141,7 +141,7 @@ public class StaminaHudOverlay {
             }
         }
     });
-    private static void eggRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int x, int y, int mode) {
+    private static void eggRendering(ForgeGui gui, PoseStack poseStack, float partialTick, int x, int y, int mode) {
         // V to make eggs anchor to the right on right presets
         x-=23*mode;
         float stamina = (ClientStaminaData.getPlayerStamina() / (CommonConfig.MAX_STAMINA.get() / (ClientConfig.SEGMENTS.get() * 22f)) - 1) / 22f;
@@ -159,13 +159,13 @@ public class StaminaHudOverlay {
             }
             else {
                 textureX = (int)(Math.ceil((stamina - (int)stamina) * 22)) * 22 - 22;
-                if(ClientStaminaData.getPlayerStamina() == CommonConfig.MAX_STAMINA.get()) textureX = 21*22;
+                if(ClientStaminaData.getPlayerStamina() >= CommonConfig.MAX_STAMINA.get()-2) textureX = 21*22;
             }
             RenderSystem.setShaderTexture(0, EGG_STAMINA);
             GuiComponent.blit(poseStack, x + (segment * (23*mode)), y, textureX, 0, 22, 9, 484, 9);
         }
     }
-    private static void horizontalBarRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int x, int y) {
+    private static void horizontalBarRendering(ForgeGui gui, PoseStack poseStack, float partialTick, int x, int y) {
         //Horizontal bar rendering is a rendering type to make the stamina appear in a bar across the screen.
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -182,7 +182,7 @@ public class StaminaHudOverlay {
         // anndd the blit.
         GuiComponent.blit(poseStack, x, y, 0, 0, ClientStaminaData.getPlayerStamina()/divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get(), ClientConfig.BAR_WIDTH.get());
     }
-    private static void verticalBarRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+    private static void verticalBarRendering(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
         int x = width / 2 - ClientConfig.POSITION_X.get()+ClientConfig.BAR_WIDTH.get();
         int y = height - ClientConfig.POSITION_Y.get()-ClientConfig.BAR_LENGTH.get();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -196,7 +196,7 @@ public class StaminaHudOverlay {
         GuiComponent.blit(poseStack, x, y+ClientConfig.BAR_LENGTH.get()-divideAmount, 0, ClientConfig.BAR_LENGTH.get()-divideAmount, ClientConfig.BAR_WIDTH.get(), divideAmount, ClientConfig.BAR_WIDTH.get(), ClientConfig.BAR_LENGTH.get()
         );
     }
-    private static void lightningBoltRendering(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int x, int y, int mode) {
+    private static void lightningBoltRendering(ForgeGui gui, PoseStack poseStack, float partialTick, int x, int y, int mode) {
         //Lightning bolt rendering is the default renderer, with vanilla style icons to indicate the player's stamina.
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

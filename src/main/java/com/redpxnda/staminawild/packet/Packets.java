@@ -22,7 +22,7 @@ public class Packets {
         INSTANCE.messageBuilder(StaminaSyncToClientPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(StaminaSyncToClientPacket::new)
                 .encoder(StaminaSyncToClientPacket::toBytes)
-                .consumer(StaminaSyncToClientPacket::handle)
+                .consumerMainThread(StaminaSyncToClientPacket::handle)
                 .add();
     }
 

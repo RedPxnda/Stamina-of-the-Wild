@@ -10,7 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 
@@ -32,8 +32,8 @@ public class StaminaRegen {
         }
     }
     @SubscribeEvent
-    public static void onPlayerJoinWorld(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isClientSide()) {
+    public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide()) {
             if (event.getEntity() instanceof ServerPlayer player) {
                 player.getCapability(PlayerStaminaProvider.PLAYER_STAMINA).ifPresent(stamina -> {
                     Packets.sendToPlayer(new StaminaSyncToClientPacket(stamina.getStamina()), player);

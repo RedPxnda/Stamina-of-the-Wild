@@ -28,26 +28,18 @@ import java.util.stream.Collectors;
 public class StaminaWild {
 
     // Directly reference a slf4j logger
-    public static DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, "staminawild");
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public StaminaWild() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-        //
 
         PotionEffects.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        ATTRIBUTES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        Attributes.register(FMLJavaModLoadingContext.get().getModEventBus());
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new Events());
         MinecraftForge.EVENT_BUS.register(new StaminaRegen());
-        MinecraftForge.EVENT_BUS.register(new Attributes());
         MinecraftForge.EVENT_BUS.register(new Events());
         FMLJavaModLoadingContext.get().getModEventBus().addListener(Attributes::AttachAttributes);
 
@@ -58,20 +50,5 @@ public class StaminaWild {
     private void setup(final FMLCommonSetupEvent event) {
         // Some preinit code
         event.enqueueWork(Packets::init);
-    }
-
-    private void enqueueIMC(final InterModEnqueueEvent event) {
-        // Some example code to dispatch IMC to another mod
-        InterModComms.sendTo("staminawild", "helloworld", () -> {
-            LOGGER.info("Hello world from the MDK");
-            return "Hello world";
-        });
-    }
-
-    private void processIMC(final InterModProcessEvent event) {
-        // Some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m -> m.messageSupplier().get()).
-                collect(Collectors.toList()));
     }
 }

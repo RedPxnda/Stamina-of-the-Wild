@@ -16,7 +16,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.redpxnda'
-version = '1.0-RELEASE'
+version = '1.0-1.19.2'
 
 java {
     archivesBaseName = 'staminawild'
@@ -37,7 +37,7 @@ minecraft {
     //
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'official', version: '1.19.2'
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -134,7 +134,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.80'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.1.1'
 
 
     annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'

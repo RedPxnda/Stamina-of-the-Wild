@@ -25,7 +25,7 @@ public class Events {
     @SubscribeEvent
     public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (CommonConfig.PLAYER_MINE_COST.get() > 0) {
-            LivingEntity entity = event.getEntityLiving();
+            LivingEntity entity = event.getEntity();
             if (entity instanceof Player player) {
                 player.getCapability(PlayerStaminaProvider.PLAYER_STAMINA).ifPresent(h -> {
                     if (Math.random() * 10 <= 5) {
@@ -74,7 +74,7 @@ public class Events {
     @SubscribeEvent
     public void onLivingHurtEvent(LivingDamageEvent event) {
         if (CommonConfig.PLAYER_HIT_COST.get() > -1) {
-            LivingEntity player = event.getEntityLiving();
+            LivingEntity player = event.getEntity();
             if (player instanceof Player) {
                 player.getCapability(PlayerStaminaProvider.PLAYER_STAMINA).ifPresent(h -> {
                     if (!player.hasEffect(PotionEffects.FATIGUE.get())) {
@@ -151,7 +151,7 @@ public class Events {
     @SubscribeEvent
     public void onShieldBlock(ShieldBlockEvent event) {
         if (CommonConfig.PLAYER_BLOCK_COST.get() > -1) {
-            LivingEntity ePlayer = event.getEntityLiving();
+            LivingEntity ePlayer = event.getEntity();
             if (ePlayer instanceof Player player) {
                 if (player.hasEffect(PotionEffects.FATIGUE.get())) {
                     event.setCanceled(true);
